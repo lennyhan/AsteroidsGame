@@ -1,30 +1,53 @@
-Spaceship awe = new Spaceship();
+Spaceship ship = new Spaceship();
 Star[] starsArray = new Star[1000];
+ArrayList <Asteroid> asteroidArray = new ArrayList <Asteroid>();
 boolean[] keys = new boolean[5]; // a, w, d, s, h
 
 public void setup()
 {
   size(500, 500);
   background(0);
+  startup();
+}
+
+public void startup() {
   for (int i = 0; i < starsArray.length; i++) {
     starsArray[i] = new Star();
     starsArray[i].show();
   }
+  for (int i = 0; i < 8; i++) {
+    asteroidArray.add(new Asteroid());
+    asteroidArray.get(i).show();
+  }
 }
+
 public void draw()
 {
   background(0);
-  for (int i = 0; i < starsArray.length; i++)
-    starsArray[i].show();
-    
-  if (keys[0]) awe.turn(-5);
-  if (keys[1]) awe.accelerate(0.1);
-  if (keys[2]) awe.turn(5);
-  if (keys[3]) awe.myXspeed = awe.myYspeed = 0;
-  if (keys[4]) awe.hyperspace();
+  initiateAll();
   
-  awe.show();
-  awe.move();
+  
+  if (keys[0]) ship.turn(-5);
+  if (keys[1]) ship.accelerate(0.1);
+  if (keys[2]) ship.turn(5);
+  if (keys[3]) ship.myXspeed = ship.myYspeed = 0;
+  if (keys[4]) ship.hyperspace();
+
+  ship.show();
+  ship.move();
+}
+
+public void initiateAll(){
+    for (int i = 0; i < starsArray.length; i++)
+    starsArray[i].show();
+    for (int i = 0; i < asteroidArray.size(); i++) {
+      asteroidArray.get(i).show();
+      asteroidArray.get(i).move();
+      
+      float d = dist((float)ship.getX(), (float)ship.getY(), (float)asteroidArray.get(i).getX(), (float)asteroidArray.get(i).getY());
+      if (d<15)
+      asteroidArray.remove(i);
+    }
 }
 
 public void keyPressed() {
