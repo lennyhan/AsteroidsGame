@@ -1,7 +1,7 @@
 Spaceship ship = new Spaceship();
 Star[] starsArray = new Star[1000];
-ArrayList <Asteroid> asteroidArray = new ArrayList <Asteroid>();
-ArrayList <Bullet> bulletArray = new ArrayList <Bullet>();
+ArrayList<Asteroid>asteroidArray = new ArrayList <Asteroid>();
+ArrayList<Bullet>bulletArray = new ArrayList <Bullet>();
 boolean[] keys = new boolean[5]; // a, w, d, s, h, space
 
 public void setup()
