@@ -1,73 +1,118 @@
-Spaceship ship = new Spaceship();
-Star[] starsArray = new Star[1000];
-ArrayList <Asteroid> asteroidArray = new ArrayList <Asteroid>();
-ArrayList <Bullet> bulletArray = new ArrayList <Bullet>();
-boolean[] keys = new boolean[5]; // a, w, d, s, h, space
+private Spaceship bob = new Spaceship();
+private Star[] bobby =  new Star[1000];
+private ArrayList <Asteroid> asteroids = new ArrayList <Asteroid> ();
+private ArrayList <Bullet> shots = new ArrayList <Bullet> ();
+private boolean[] keys = new boolean[5]; // a, w, d, s, space
 
-public void setup()
-{
+public void setup() {
   size(500, 500);
-  background(0);
-  startup();
-}
 
-public void startup() {
-  for (int i = 0; i < starsArray.length; i++) {
-    starsArray[i] = new Star();
-    starsArray[i].show();
+  for (int i = 0; i < bobby.length; i++) {
+    bobby[i] = new Star();
   }
-  for (int i = 0; i < 8; i++) {
-    asteroidArray.add(new Asteroid());
-    asteroidArray.get(i).show();
+  
+  for (int j = 0; j < 10; j++) {
+    asteroids.add(new Asteroid());
   }
 }
 
 public void draw() {
   background(0);
-    for (int i = 0; i < starsArray.length; i++)
-    starsArray[i].show();
-  for (int i = 0; i < asteroidArray.size(); i++) {
-    asteroidArray.get(i).show();
-    asteroidArray.get(i).move();
-
-    float d = dist((float)ship.getX(), (float)ship.getY(), (float)asteroidArray.get(i).getX(), (float)asteroidArray.get(i).getY());
-    if (d<15)
-      asteroidArray.remove(i);
+  for (int i = 0; i < bobby.length; i++) {
+    bobby[i].show();
   }
-  for (int i = 0; i < bulletArray.size(); i++) {
-    bulletArray.get(i).show();
-    bulletArray.get(i).move();
+  
+  for (int j = 0; j < asteroids.size(); j++) {
+    asteroids.get(j).move();
+    asteroids.get(j).show();
     
-    for (int e = 0; e < asteroidArray.size(); e++) {
-      float dist = dist((float)bulletArray.get(i).getX(), (float)bulletArray.get(i).getY(), (float)asteroidArray.get(e).getX(), (float)asteroidArray.get(e).getY());
-      if (dist<10) {
-        bulletArray.remove(i);
-        asteroidArray.remove(e);
+    double d = dist((float) bob.getX(), (float) bob.getY(), (float) asteroids.get(j).getX(), (float) asteroids.get(j).getY());  
+    if (d < 35) {
+      asteroids.remove(j);
+    }
+  }
+  
+  for (int k = 0; k < shots.size(); k++) {
+    shots.get(k).move();
+    shots.get(k).show();
+    
+    for (int l = 0; l < asteroids.size(); l++) {
+      double d = dist((float) shots.get(k).getX(), (float) shots.get(k).getY(), (float) asteroids.get(l).getX(), (float) asteroids.get(l).getY());  
+       if (d < 35) {
+        asteroids.remove(l);
+        shots.remove(k);
         break;
       }
     }
   }
 
-  if (keys[0]) ship.turn(-5);
-  if (keys[1]) ship.accelerate(0.1);
-  if (keys[2]) ship.turn(5);
-  if (keys[3]) ship.myXspeed = ship.myYspeed = 0;
-
-  ship.show();
-  ship.move();
+  if (keys[0]) {
+    bob.turn(-5);
+  }
+  
+  if (keys[1]) {
+    bob.accelerate(0.075);
+  }
+  
+  if (keys[2]) {
+    bob.turn(5);
+  }
+  
+  if (keys[3]) {
+    bob.myXspeed = bob.myYspeed = 0;
+  }
+  
+  bob.move();
+  bob.show();
+  
+  textSize(25);
+  fill(255);
 }
+
 public void keyPressed() {
-  if (key == 'a' || keyCode == LEFT) keys[0] = true;
-  if (key == 'w' || keyCode == UP) keys[1] = true;
-  if (key == 'd' || keyCode == RIGHT) keys[2] = true;
-  if (key == 's') keys[3] = true;
-  if (keyCode == SHIFT) ship.hyperspace();
-  if (key == ' ') bulletArray.add(new Bullet(ship));
+  if (key == 'a' || keyCode == LEFT) {
+    keys[0] = true;
+  }
+
+  if (key == 'w' || keyCode == UP) {
+    keys[1] = true;
+  }
+
+  if (key == 'd' || keyCode == RIGHT) {
+    keys[2] = true;
+  }
+  
+  if (key == 's' || keyCode == DOWN) {
+    keys[3] = true;
+  }
+  
+  if (key == ' ') {
+    shots.add(new Bullet(bob));;
+  }
+
+  if (keyCode == SHIFT) {
+    bob.hyperspace();
+  }
 }
 
 public void keyReleased() {
-  if (key == 'a' || keyCode == LEFT) keys[0] = false;
-  if (key == 'w' || keyCode == UP) keys[1] = false;
-  if (key == 'd' || keyCode == RIGHT) keys[2] = false;
-  if (key == 's') keys[3] = false;
+  if (key == 'a' || keyCode == LEFT) {
+    keys[0] = false;
+  }
+
+  if (key == 'w' || keyCode == UP) {
+    keys[1] = false;
+  }
+
+  if (key == 'd' || keyCode == RIGHT) {
+    keys[2] = false;
+  }
+  
+  if (key == 's' || keyCode == DOWN) {
+    keys[3] = false;
+  }
+  
+  if (key == ' ') {
+    keys[4] = false;
+  }
 }
