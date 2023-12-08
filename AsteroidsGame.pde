@@ -115,4 +115,4 @@ public void keyReleased() {
   if (key == ' ') {
     keys[4] = false;
   }
-}
+} //cred it to luiss just straight up crtl c his code
