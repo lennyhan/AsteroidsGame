@@ -24,19 +24,7 @@ public void startup() {
 
 public void draw() {
   background(0);
-  initiateAll();
-
-  if (keys[0]) ship.turn(-5);
-  if (keys[1]) ship.accelerate(0.1);
-  if (keys[2]) ship.turn(5);
-  if (keys[3]) ship.myXspeed = ship.myYspeed = 0;
-
-  ship.show();
-  ship.move();
-}
-
-public void initiateAll() {
-  for (int i = 0; i < starsArray.length; i++)
+    for (int i = 0; i < starsArray.length; i++)
     starsArray[i].show();
   for (int i = 0; i < asteroidArray.size(); i++) {
     asteroidArray.get(i).show();
@@ -59,8 +47,15 @@ public void initiateAll() {
       }
     }
   }
-}
 
+  if (keys[0]) ship.turn(-5);
+  if (keys[1]) ship.accelerate(0.1);
+  if (keys[2]) ship.turn(5);
+  if (keys[3]) ship.myXspeed = ship.myYspeed = 0;
+
+  ship.show();
+  ship.move();
+}
 public void keyPressed() {
   if (key == 'a' || keyCode == LEFT) keys[0] = true;
   if (key == 'w' || keyCode == UP) keys[1] = true;
